@@ -1,0 +1,678 @@
+---
+openapi: 3.0.0
+info:
+  title: Bar Cafe API
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/KAZIMIERASJASAITIS_1/bar_cafe_info_system/1.0.0
+  description: SwaggerHub API Auto Mocking
+paths:
+  /bar_cafe:
+    get:
+      summary: Get a list of all bars and cafes
+      responses:
+        "200":
+          description: A list of bars and cafes
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/BarCafe'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+    post:
+      summary: Add a new bar or cafe
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bar_cafe_body'
+        required: true
+      responses:
+        "201":
+          description: Bar or cafe created successfully
+          headers:
+            Location:
+              description: URL of the created bar or cafe
+              style: simple
+              explode: false
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarCafe'
+        "400":
+          description: Bad request (missing or invalid input data)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+  /bar_cafe/{id}:
+    get:
+      summary: Get a specific bar or cafe by ID
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the bar or cafe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: The requested bar or cafe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarCafe'
+        "404":
+          description: Bar or cafe not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+    put:
+      summary: Update a specific bar or cafe by ID
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the bar or cafe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BarCafe'
+        required: true
+      responses:
+        "200":
+          description: The updated bar or cafe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarCafe'
+        "400":
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "404":
+          description: Bar or cafe not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+    delete:
+      summary: Delete a specific bar or cafe by ID
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the bar or cafe
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: The deleted bar or cafe
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BarCafe'
+        "404":
+          description: Bar or cafe not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+  /user:
+    get:
+      summary: Retrieve all users
+      responses:
+        "200":
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+    post:
+      summary: Create a new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_body'
+        required: true
+      responses:
+        "201":
+          description: The created user
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: "Bad request, missing required fields or invalid input"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "409":
+          description: "Conflict, a user with the same email or username already exists"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+  /user/{username}:
+    get:
+      summary: Retrieve a user by username
+      parameters:
+      - name: username
+        in: path
+        description: The user's username
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: The user object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+    put:
+      summary: Update a user by username
+      parameters:
+      - name: username
+        in: path
+        description: The username of the user to be updated
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user_username_body'
+        required: true
+      responses:
+        "200":
+          description: User successfully updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+        "409":
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+    delete:
+      summary: Delete a user by username
+      parameters:
+      - name: username
+        in: path
+        description: The username of the user to be deleted
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: User successfully deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "404":
+          description: User not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+  /seat_status:
+    get:
+      summary: Retrieve a list of all seat statuses
+      responses:
+        "200":
+          description: A list of seat statuses
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SeatStatus'
+    post:
+      summary: Add a new seat status
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/seat_status_body'
+        required: true
+      responses:
+        "200":
+          description: Seat status successfully created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeatStatus'
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_500'
+  /seat_status/{id}:
+    get:
+      summary: Retrieve a seat status by its ID
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the seat status
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: A seat status object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeatStatus'
+        "404":
+          description: Seat status not found
+    put:
+      summary: Update a seat status by its ID
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the seat status
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SeatStatus'
+        required: true
+      responses:
+        "200":
+          description: Seat status updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeatStatus'
+        "400":
+          description: Invalid input
+        "404":
+          description: Seat status not found
+    delete:
+      summary: Delete a seat status by its ID
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the seat status to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Seat status deleted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SeatStatus'
+        "404":
+          description: Seat status not found
+  /karma_log:
+    get:
+      summary: Get all karma log entries
+      responses:
+        "200":
+          description: A list of karma log entries
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/KarmaLog'
+        "500":
+          description: Internal server error
+    post:
+      summary: Add a new karma log entry
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/karma_log_body'
+        required: true
+      responses:
+        "201":
+          description: Karma log entry created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KarmaLog'
+        "400":
+          description: "Bad request, missing required fields"
+  /karma_log/{id}:
+    get:
+      summary: Get a specific karma log entry by id
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the karma log entry to retrieve
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: A karma log entry
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KarmaLog'
+        "404":
+          description: Karma log entry not found
+    put:
+      summary: Update a specific karma log entry by id
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the karma log entry to update
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/KarmaLog'
+        required: true
+      responses:
+        "200":
+          description: Karma log entry updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KarmaLog'
+        "400":
+          description: Bad Request
+        "404":
+          description: Karma log entry not found
+    delete:
+      summary: Delete a specific karma log entry by id
+      parameters:
+      - name: id
+        in: path
+        description: The ID of the karma log entry to delete
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: Karma log entry deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/KarmaLog'
+        "404":
+          description: Karma log entry not found
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+          enum:
+          - user
+          - admin
+        managed_cafe_id:
+          type: integer
+          nullable: true
+        reputation_index:
+          type: integer
+    BarCafe:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        location:
+          type: string
+        open_hours:
+          type: string
+        type:
+          type: string
+        seats:
+          type: integer
+        user_id:
+          type: integer
+    SeatStatus:
+      type: object
+      properties:
+        id:
+          type: integer
+        bar_cafe_id:
+          type: integer
+        user_id:
+          type: integer
+        status:
+          type: string
+        timestamp:
+          type: string
+    KarmaLog:
+      type: object
+      properties:
+        id:
+          type: integer
+        user_id:
+          type: integer
+        username:
+          type: string
+        delta:
+          type: integer
+        description:
+          type: string
+        timestamp:
+          type: string
+    inline_response_500:
+      type: object
+      properties:
+        error:
+          type: string
+    bar_cafe_body:
+      required:
+      - location
+      - name
+      - open_hours
+      - seats
+      - type
+      - user_id
+      type: object
+      properties:
+        name:
+          type: string
+        location:
+          type: string
+        open_hours:
+          type: string
+        type:
+          type: string
+        seats:
+          type: integer
+        user_id:
+          type: integer
+    user_body:
+      required:
+      - email
+      - password
+      - role
+      - username
+      type: object
+      properties:
+        username:
+          type: string
+          description: The unique username of the user
+        password:
+          type: string
+          description: The password of the user
+        email:
+          type: string
+          description: The email address of the user
+        role:
+          type: string
+          description: The role of the user (either 'user' or 'admin')
+        managed_cafe_id:
+          type: integer
+          description: The ID of the managed cafe
+        reputation_index:
+          type: integer
+          description: The reputation index of the user
+    user_username_body:
+      type: object
+      properties:
+        password:
+          type: string
+        email:
+          type: string
+        role:
+          type: string
+        managed_cafe_id:
+          type: string
+        reputation_index:
+          type: number
+    seat_status_body:
+      type: object
+      properties:
+        bar_cafe_id:
+          type: string
+          description: ID of the bar or cafe
+        user_id:
+          type: string
+          description: ID of the user
+        status:
+          type: string
+          description: "Seat status (e.g., occupied, available)"
+        timestamp:
+          type: string
+          description: Timestamp when the status was reported
+          format: date-time
+    karma_log_body:
+      required:
+      - reputation_index
+      - timestamp
+      - user_id
+      type: object
+      properties:
+        user_id:
+          type: string
+          description: The ID of the user whose karma log entry is being created
+        reputation_index:
+          type: integer
+          description: The reputation index of the user at the time of the karma log entry
+        timestamp:
+          type: string
+          description: The timestamp of the karma log entry

@@ -7,13 +7,31 @@ import data
 from sqlalchemy.exc import IntegrityError
 from flask import url_for
 
+from flask_swagger_ui import get_swaggerui_blueprint
+
+
 app = Flask(__name__)
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///cafe_bar_info_system.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
+###########################################
+# Configure Swagger UI
+SWAGGER_URL = '/api/docs'  # URL for exposing Swagger UI
+API_YAML_URL = '/static/swagger.yaml'  # Location of your YAML file
 
+# Register Swagger blueprint
+swaggerui_blueprint = get_swaggerui_blueprint(
+    SWAGGER_URL,
+    API_YAML_URL,
+    config={
+        'app_name': "YourAppName"
+    }
+)
+
+app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
+###########################################
 
 class User(db.Model):
     username = db.Column(db.String(255), primary_key=True)
