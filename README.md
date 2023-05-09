@@ -1,12 +1,12 @@
 # Cafe and Bar Information System
 ## How to run
-`git clone https://github.com/KazimierasJasaitis/cafe_bar_IS.git`
-`cd cafe_bar_IS`
-### I
-`make`
-### II
-`docker build -t cafe_bar_info_system .`
-`docker run -d -p 5000:5000 --name cafe_bar_info_system cafe_bar_info_system`
+- `git clone https://github.com/KazimierasJasaitis/cafe_bar_IS.git`
+- `cd cafe_bar_IS`
+###     I
+- `make`
+###     II
+- `docker build -t cafe_bar_info_system .`
+- `docker run -d -p 5000:5000 --name cafe_bar_info_system cafe_bar_info_system`
 ## Documentation
 `http://localhost:5000/api/docs`
 ## API Endpoints
