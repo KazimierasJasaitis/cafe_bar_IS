@@ -4,7 +4,7 @@ info:
   title: Bar Cafe API
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/KAZIMIERASJASAITIS_1/bar_cafe_info_system/1.0.0
+- url: http://localhost:5000
   description: SwaggerHub API Auto Mocking
 paths:
   /bar_cafe:
